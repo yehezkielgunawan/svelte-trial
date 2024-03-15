@@ -14,7 +14,7 @@
   main,
   footer,
   nav {
-    @apply mx-auto max-w-xl p-2 md:px-0;
+    @apply mx-auto max-w-lg p-2 md:px-0;
   }
 
   /* #region  /**=========== Typography =========== */
