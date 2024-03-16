@@ -1,8 +1,15 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { onMount } from "svelte";
 
   // receive error props
   export let form;
+
+  onMount(() => {
+    if (form?.status === 200) {
+      goto("/admin");
+    }
+  });
 </script>
 
 <!-- base login page UI -->
@@ -37,8 +44,4 @@
 <!-- Error message -->
 {#if form?.error}
   <p class="text-red-500 mt-4">{form?.error}</p>
-{/if}
-
-{#if form?.body}
-  <p class="text-green-500 mt-4">{form?.body.message}</p>
 {/if}

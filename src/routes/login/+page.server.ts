@@ -1,21 +1,22 @@
 import prisma from "$lib/prisma.js";
-import type { UserData } from "$lib/types.js";
 import { fail } from "@sveltejs/kit";
 import CryptoJs from "crypto-js";
 
 export const actions = {
   default: async ({ request, cookies }) => {
     const data = await request.formData();
-    const email = data.get("email") as string;
+    const email = data.get("email");
     const password = data.get("password") as string;
     const hashedPassword = CryptoJs.MD5(password).toString();
 
-    const userData = await prisma.user.findUnique({
-      where: {
-        email: email as string,
-        password: hashedPassword,
-      },
-    });
+    const userData = email
+      ? await prisma.user.findUnique({
+          where: {
+            email: email as string,
+            password: hashedPassword,
+          },
+        })
+      : null;
 
     // if the user is not found
     if (!userData) {

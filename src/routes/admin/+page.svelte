@@ -1,6 +1,18 @@
 <script>
+  import { enhance } from "$app/forms";
+
   export let data;
 </script>
+
+<div class="flex items-center justify-between gap-4 flex-wrap">
+  <h2>ADMIN Mode</h2>
+  <form method="POST" action="?/logout" use:enhance>
+    <button
+      class="bg-black text-white rounded p-2 text-sm hover:underline"
+      type="submit">Logout</button
+    >
+  </form>
+</div>
 
 {#if data.data}
   {#each data.data as item}
