@@ -37,8 +37,59 @@ export const load = async ({ cookies }) => {
 };
 
 export const actions = {
-  logout: async ({ cookies, request }) => {
+  logout: async ({ cookies }) => {
     // clear the user's token from the cookie
     cookies.delete("token", { path: "/" });
+  },
+  add: async ({ request }) => {
+    const data = await request.formData();
+    const pageName = data.get("pageName");
+    const url = data.get("url");
+    const linkID = data.get("id");
+
+    // check if the id is found in the DB
+    if (linkID) {
+      await prisma.link.update({
+        where: {
+          id: parseInt(linkID as string),
+        },
+        data: {
+          name: pageName as string,
+          url: url as string,
+        },
+      });
+      return {
+        status: 201,
+        body: { message: "Link updated!" },
+      };
+    } else {
+      // insert the new link to the DB
+      await prisma.link.create({
+        data: {
+          name: pageName as string,
+          url: url as string,
+        },
+      });
+      // return the status code
+      return {
+        status: 201,
+        body: { message: "Link added!" },
+      };
+    }
+  },
+  delete: async ({ request }) => {
+    const data = await request.formData();
+    const linkID = data.get("id");
+
+    // delete the link from the DB
+    await prisma.link.delete({
+      where: {
+        id: parseInt(linkID as string),
+      },
+    });
+    return {
+      status: 200,
+      body: { message: "Link Deleted!" },
+    };
   },
 };

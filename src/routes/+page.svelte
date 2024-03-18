@@ -6,7 +6,7 @@
   {#each data.data as item}
     <!-- set the card link -->
     <div class="border border-black p-2 rounded first:mt-0 mt-4">
-      <a href={item.url}>
+      <a href={item.url} target="_blank" class="overflow-hidden text-ellipsis">
         <h3>{item.name}</h3>
         <p class="text-sm">{item.url}</p>
       </a>

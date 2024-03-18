@@ -10,3 +10,12 @@
 <main>
   <slot />
 </main>
+
+<footer class="mt-8">
+  <hr class="bg-black h-0.5" />
+  <a href="https://yehezgun.com"
+    >{new Date().toLocaleDateString("en-GB", {
+      year: "numeric",
+    })} | Yehezkiel Gunawan</a
+  >
+</footer>
